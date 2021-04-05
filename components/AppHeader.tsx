@@ -7,10 +7,10 @@ import { View, Text } from "./Themed";
 import BurgerMenu from "./ui/BurgerMenu";
 import UserDetails from "./UserDetails";
 
-const AppHeader = ({ title }: any) => {
+const AppHeader = ({ title, navigation }: any) => {
   return (
     <View style={styles.container}>
-      <BurgerMenu />
+      <BurgerMenu onPress={() => navigation.openDrawer()} />
       {title ? <Text style={styles.text}>{title}</Text> : <Image style={styles.logo} source={require("../assets/images/KesherHeaderLogo.png")} />}
       <UserDetails />
     </View>
