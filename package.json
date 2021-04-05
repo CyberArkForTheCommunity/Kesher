@@ -40,5 +40,11 @@
     "jest-expo": "~40.0.0",
     "typescript": "~4.0.0"
   },
-  "private": true
+  "splash": {
+    "image": "./assets/images/splash.png",
+    "resizeMode": "contain",
+    "backgroundColor": "#804ED9"
+  },
+  "private": true,
+  "name": "Kesher"
 }
