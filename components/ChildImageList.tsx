@@ -10,18 +10,18 @@ export interface ImageData {
 }
 export const IMAGES_PER_ROW = 3;
 
-export default function ChildImageList() {
+export default function ChildImageList({ onSelect = (f: any) => f }) {
   const imagesData = getImagesData(11);
 
   const toggleImageSelected = (imageId: Number, selected: Boolean) => {
     const data = imagesData.find((imageData: ImageData) => imageData.id === imageId);
     if (data) {
       data.selected = selected;
-      console.log(data.id, data.selected);
+      onSelect(data);
     }
   };
 
-  const renderItem = ({ item }) => <ChildImage imageData={item} onImagePressed={(imageId: Number, state: Boolean) => toggleImageSelected(imageId, state)}></ChildImage>;
+  const renderItem = ({ item }: any) => <ChildImage imageData={item} onImagePressed={(imageId: Number, state: Boolean) => toggleImageSelected(imageId, state)}></ChildImage>;
 
   return <FlatList data={imagesData} renderItem={renderItem} keyExtractor={(item: ImageData) => item.id.toString()} numColumns={IMAGES_PER_ROW} />;
 }
@@ -46,7 +46,7 @@ const getImagesData = (num: Number): ImageData[] => {
     data.push({
       id: i,
       selected: i % 4 == 0,
-      imageUri: "../assets/images/happy-little-1.png",
+      imageUri: "https://i.pravatar.cc/300",
       name: names[i],
     });
   }

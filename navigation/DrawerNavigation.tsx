@@ -10,6 +10,7 @@ import useUserRole from "../hooks/useUserRoles";
 import Board from "../screens/Board";
 import Corona from "../screens/Corona";
 import Home from "../screens/Home";
+import Presence from "../screens/Presence";
 import Reports from "../screens/Reports";
 import Setting from "../screens/Setting";
 import { TabTwoParamList } from "../types";
@@ -57,6 +58,14 @@ const AppDrawer = () => {
               drawerLabel: () => <DrawerMenu title="דיווח יומי" />,
             }}
             component={Reports}
+          />
+          <Drawer.Screen
+            name="Presence"
+            options={{
+              drawerIcon: () => <Image style={styles.icon} source={require("../assets/images/presence.png")} />,
+              drawerLabel: () => <DrawerMenu title="עידכון נוכחות" />,
+            }}
+            component={Presence}
           />
           <Drawer.Screen
             name="Messages"
