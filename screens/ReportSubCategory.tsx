@@ -223,7 +223,7 @@ const ReportSubCategory = ({ route, navigation }) => {
             message = selectedData.title + "," + message;
         }
         //alert("id: " + selectedData.id + " message: " + message)
-        navigation.navigate('ReportScreen');
+        navigation.navigate('ChatTabScreen', { data: route.params.childData });
     }
 
     const [messageText, setText] = useState('');
@@ -257,6 +257,7 @@ const ReportSubCategory = ({ route, navigation }) => {
                     </View>
                 </View>
             </Modal>
+            <Text style={styles.childName}>{route.params.childData.name}</Text>
             <FlatList
                 data={subCategoriesData}
                 renderItem={renderItem}
@@ -293,6 +294,15 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
+    },
+    childName: {
+        fontSize: 18,
+        textAlign: 'center',
+        padding: 20,
+        marginRight: 20,
+        marginLeft: 20,
+        borderBottomColor: 'lightgray',
+        borderBottomWidth: 1
     },
     buttonUpdate: {
         backgroundColor: "#A683E4",
