@@ -6,19 +6,19 @@ import AppHeader from "../components/AppHeader";
 import { View, Text } from "../components/Themed";
 
 import Colors from "../constants/Colors";
+import useUserRole from "../hooks/useUserRoles";
 import Board from "../screens/Board";
 import Corona from "../screens/Corona";
 import Home from "../screens/Home";
 import Reports from "../screens/Reports";
 import Setting from "../screens/Setting";
-import TabOneScreen from "../screens/TabOneScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
 import { TabTwoParamList } from "../types";
 
 const Drawer = createDrawerNavigator();
 
 const AppDrawer = () => {
   const dimensions = useWindowDimensions();
+  const user = useUserRole();
 
   const isLargeScreen = dimensions.width >= 768;
 
@@ -49,30 +49,34 @@ const AppDrawer = () => {
         }}
         component={Corona}
       />
-      <Drawer.Screen
-        name="Report"
-        options={{
-          drawerIcon: () => <Image style={styles.icon} source={require("../assets/images/report.png")} />,
-          drawerLabel: () => <DrawerMenu title="דיווח יומי" />,
-        }}
-        component={Reports}
-      />
-      <Drawer.Screen
-        name="Messages"
-        options={{
-          drawerIcon: () => <Image style={styles.icon} source={require("../assets/images/bord.png")} />,
-          drawerLabel: () => <DrawerMenu title="לוח מודעות" />,
-        }}
-        component={Board}
-      />
-      <Drawer.Screen
-        name="Setting"
-        options={{
-          drawerIcon: () => <Image style={styles.icon} source={require("../assets/images/setting.png")} />,
-          drawerLabel: () => <DrawerMenu title="הגדרות" />,
-        }}
-        component={Setting}
-      />
+      {user?.role === "admin" && (
+        <>
+          <Drawer.Screen
+            name="Report"
+            options={{
+              drawerIcon: () => <Image style={styles.icon} source={require("../assets/images/report.png")} />,
+              drawerLabel: () => <DrawerMenu title="דיווח יומי" />,
+            }}
+            component={Reports}
+          />
+          <Drawer.Screen
+            name="Messages"
+            options={{
+              drawerIcon: () => <Image style={styles.icon} source={require("../assets/images/bord.png")} />,
+              drawerLabel: () => <DrawerMenu title="לוח מודעות" />,
+            }}
+            component={Board}
+          />
+          <Drawer.Screen
+            name="Setting"
+            options={{
+              drawerIcon: () => <Image style={styles.icon} source={require("../assets/images/setting.png")} />,
+              drawerLabel: () => <DrawerMenu title="הגדרות" />,
+            }}
+            component={Setting}
+          />
+        </>
+      )}
       <Drawer.Screen
         name="Site"
         options={{
@@ -109,57 +113,6 @@ const DrawerMenu = ({ title, link }: any) => {
 };
 
 export default AppDrawer;
-
-const MainStack = createStackNavigator();
-
-function MainStackNavigator() {
-  return (
-    <MainStack.Navigator>
-      <MainStack.Screen
-        name="Home"
-        component={Home}
-        options={({ navigation }: any) => ({
-          headerTitle: () => <AppHeader title="Tab one" navigation={navigation} />,
-          headerTintColor: "#fff",
-          headerStyle: {
-            backgroundColor: Colors.app.purple,
-          },
-        })}
-      />
-      <MainStack.Screen
-        name="Corona"
-        component={TabTwoScreen}
-        options={({ navigation }: any) => ({
-          headerTitle: () => <AppHeader navigation={navigation} />,
-          headerTintColor: "#fff",
-          headerStyle: {
-            backgroundColor: Colors.app.purple,
-          },
-        })}
-      />
-    </MainStack.Navigator>
-  );
-}
-
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
-
-function TabTwoNavigator() {
-  return (
-    <TabTwoStack.Navigator>
-      <TabTwoStack.Screen
-        name="TabTwoScreen"
-        component={TabTwoScreen}
-        options={({ navigation }: any) => ({
-          headerTitle: () => <AppHeader navigation={navigation} />,
-          headerTintColor: "#fff",
-          headerStyle: {
-            backgroundColor: Colors.app.purple,
-          },
-        })}
-      />
-    </TabTwoStack.Navigator>
-  );
-}
 
 const styles = StyleSheet.create({
   drawer: {
