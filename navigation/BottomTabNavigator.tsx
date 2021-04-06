@@ -6,9 +6,10 @@ import AppHeader from "../components/AppHeader";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
-import TabOneScreen from "../screens/TabOneScreen";
+import ReportSubCategory from "../screens/ReportSubCategory";
+import ReportScreen from "../screens/ReportTab";
 import TabTwoScreen from "../screens/TabTwoScreen";
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from "../types";
+import { BottomTabParamList, ReportParamList, TabTwoParamList } from "../types";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -16,10 +17,10 @@ export default function BottomTabNavigator() {
   const colorScheme = useColorScheme();
 
   return (
-    <BottomTab.Navigator initialRouteName="TabOne" tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+    <BottomTab.Navigator initialRouteName="Report" tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
-        name="TabOne"
-        component={TabOneNavigator}
+        name="דיווח יומי"
+        component={ReportNavigator}
         options={{
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
         }}
@@ -43,23 +44,28 @@ function TabBarIcon(props: { name: React.ComponentProps<typeof Ionicons>["name"]
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator<TabOneParamList>();
+const ReportStack = createStackNavigator<ReportParamList>();
 
-function TabOneNavigator() {
+function ReportNavigator() {
   return (
-    <TabOneStack.Navigator>
-      <TabOneStack.Screen
-        name="TabOneScreen"
-        component={TabOneScreen}
+    <ReportStack.Navigator>
+      <ReportStack.Screen
+        name="ReportScreen"
+        component={ReportScreen}
         options={{
-          headerTitle: () => <AppHeader title="Tab one" />,
+          headerTitle: () => <AppHeader title="" />,
           headerTintColor: "#fff",
           headerStyle: {
             backgroundColor: Colors.app.purple,
           },
         }}
       />
-    </TabOneStack.Navigator>
+      <ReportStack.Screen
+        name="ReportSubCategory"
+        component={ReportSubCategory}
+        options={{ headerTitle: '' }}
+      />
+    </ReportStack.Navigator>
   );
 }
 
