@@ -16,7 +16,7 @@ const useUserRole = () => {
         setUserData(JSON.parse(userStorage));
       } else {
         //todo get user data from ... ???
-        const role = { role: "admin" };
+        const role = { role: "parent" };
         await storeData(userKey, JSON.stringify(role));
         setUserData(role);
       }

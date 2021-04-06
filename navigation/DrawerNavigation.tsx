@@ -51,6 +51,18 @@ const AppDrawer = () => {
         }}
         component={Corona}
       />
+        {user?.role === "parent" && (
+        <>
+          <Drawer.Screen
+            name="Report"
+            options={{
+              drawerIcon: () => <Image style={styles.icon} source={require("../assets/images/report.png")} />,
+              drawerLabel: () => <DrawerMenu title="דיווח יומי" />,
+            }}
+            component={ChatTabScreen}
+          />
+          </>
+        )}
       {user?.role === "admin" && (
         <>
           <Drawer.Screen
