@@ -6,7 +6,7 @@ import Layout from "./../constants/Layout";
 interface ChildProps {
   rows?: Number;
   imageData: ImageData;
-  onImagePressed: (id: Number, state: Boolean) => void;
+  onImagePressed: (data: any) => void;
 }
 
 export default function ({ rows = 3, imageData, onImagePressed }: ChildProps) {
@@ -25,7 +25,7 @@ export default function ({ rows = 3, imageData, onImagePressed }: ChildProps) {
   const onPressButton = (imageData: ImageData) => {
     const newSelectedState = !selectedState;
     setSelectedState(newSelectedState);
-    onImagePressed(imageData.id, newSelectedState);
+    onImagePressed(imageData);
   };
 
   if (selectedState) {
