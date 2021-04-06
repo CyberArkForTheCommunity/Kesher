@@ -1,6 +1,7 @@
 import * as React from "react";
 import { FlatList } from "react-native-gesture-handler";
 import ChildImage from "./ChildImage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export interface ImageData {
   id: Number;
@@ -9,21 +10,50 @@ export interface ImageData {
   name: string;
 }
 export const IMAGES_PER_ROW = 3;
+const dayKey = "@c_day";
+const childrenKey = "@c_list";
 
 export default function ChildImageList({ onSelect = (f: any) => f }) {
-  const imagesData = getImagesData(11);
+  const [childList, setChildList] = React.useState<Array<ImageData>>([]);
 
-  const toggleImageSelected = (imageId: Number, selected: Boolean) => {
-    const data = imagesData.find((imageData: ImageData) => imageData.id === imageId);
-    if (data) {
-      data.selected = selected;
-      onSelect(data);
+  React.useEffect(() => {
+    (async () => {
+      const cDateData = await AsyncStorage.getItem(dayKey);
+      if (cDateData !== null) {
+        const data = JSON.parse(cDateData);
+        await checkCdata(+data);
+      } else {
+        checkCdata(null);
+      }
+    })();
+  }, []);
+
+  const checkCdata = async (day: number | null) => {
+    const today = new Date().getDay();
+    if (day === today) {
+      const cChildList: any = await AsyncStorage.getItem(childrenKey);
+      setChildList([...JSON.parse(cChildList)]);
+      return;
     }
+    // todo get children list from server...
+
+    const childrenList = getImagesData(11);
+    setChildList(childrenList);
+    await AsyncStorage.setItem(dayKey, "today");
+    await AsyncStorage.setItem(dayKey, JSON.stringify(childrenList));
   };
 
-  const renderItem = ({ item }: any) => <ChildImage imageData={item} onImagePressed={(imageId: Number, state: Boolean) => toggleImageSelected(imageId, state)}></ChildImage>;
+  const toggleImageSelected = async (childData: ImageData) => {
+    childData.selected = !childData.selected;
+    const oldItem = childList.find((item) => item.id === childData.id);
+    if (oldItem) oldItem.selected = childData.selected;
+    setChildList([...childList]);
+    await AsyncStorage.setItem(childrenKey, JSON.stringify([...childList]));
+    onSelect(childData);
+  };
 
-  return <FlatList data={imagesData} renderItem={renderItem} keyExtractor={(item: ImageData) => item.id.toString()} numColumns={IMAGES_PER_ROW} />;
+  const renderItem = ({ item }: any) => <ChildImage key={item.id} imageData={item} onImagePressed={(data: ImageData) => toggleImageSelected(data)}></ChildImage>;
+  return <FlatList data={childList} renderItem={renderItem} keyExtractor={(item: ImageData) => item.id.toString()} numColumns={IMAGES_PER_ROW} />;
 }
 
 const getImagesData = (num: Number): ImageData[] => {
@@ -45,7 +75,7 @@ const getImagesData = (num: Number): ImageData[] => {
   for (let i = 1; i <= num; i++) {
     data.push({
       id: i,
-      selected: i % 4 == 0,
+      selected: false,
       imageUri: "https://i.pravatar.cc/300",
       name: names[i],
     });
