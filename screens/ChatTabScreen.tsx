@@ -77,7 +77,7 @@ export default function ChatTabScreen({ route, navigation }) {
     return (
       <Item
         item={item}
-        onPress={() => { setModalVisible(false); navigation.navigate("ReportSubCategory", { itemId: item.id }); }}
+        onPress={() => { setModalVisible(false); navigation.navigate("ReportSubCategory", { itemId: item.id, childData: route.params.data }); }}
       />
     );
   };
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 120
+    marginTop: 150
   },
   modalText: {
     marginBottom: 15,
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   buttonClose: {
-    margin: 20
+    margin: 15
   },
   button: {
     borderRadius: 16,
