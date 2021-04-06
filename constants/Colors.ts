@@ -19,5 +19,6 @@ export default {
   app: {
     purple: "#804ED9",
     lightPurple: "#A683E4",
+    purple10: "#F0E8FF",
   },
 };
