@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Modal, Pressable, StyleSheet, Image } from 'react-native';
 import { Text, View } from '../components/Themed';
-import { GiftedChat, Message } from 'react-native-gifted-chat';
+import { GiftedChat, Message, InputToolbar } from 'react-native-gifted-chat';
 import { CustomMessage } from '../components/message';
 import { mockMessages } from '../mock/mock-messages'
 import AppLayout from "../components/AppLayout";
@@ -13,6 +13,7 @@ export default function ChatTabScreen({ route, navigation }) {
 
   const [messages, setMessages] = React.useState([]);
   const user = useUserRole();
+  const isParent = user?.role === "parent";
 
   const messagesFromServer = mockMessages.map(message => {
     return {
@@ -30,8 +31,23 @@ export default function ChatTabScreen({ route, navigation }) {
     setMessages(messagesFromServer)
   }, [])
 
+  const customtInputToolbar = props => {
+    if(!isParent) {
+      return (<Pressable style={styles.reportButton}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={styles.reportButtonText}>התחל דיווח</Text>
+      </Pressable>);
+    }
+    return (
+      <InputToolbar
+        {...props}
+      />
+    );
+  };
+
   const customRenderMessage = ((message: Message) => {
-    return CustomMessage(message)
+    return CustomMessage(message, isParent)
   })
 
   const onSend = React.useCallback((messages = []) => {
@@ -85,13 +101,13 @@ export default function ChatTabScreen({ route, navigation }) {
   return (
     <AppLayout navigation={navigation} title="דיווח יומי">
       <View style={styles.container}>
-        <Text style={styles.childName}>{route.params.data.name}</Text>
-        <GiftedChat messages={messages} onSend={messages => onSend(messages)} user={{ _id: 1 }} renderMessage={message => customRenderMessage(message)} />
-        <Pressable
-          onPress={() => setModalVisible(true)}
-        >
-          <Text>התחל דיווח</Text>
-        </Pressable>
+        <Text style={styles.childName}>{route?.params?.data?.name}</Text>
+        <GiftedChat messages={messages} 
+        onSend={messages => onSend(messages)} 
+        user={{ _id: 1 }} 
+        renderMessage={message => customRenderMessage(message)} 
+        renderInputToolbar={props => customtInputToolbar(props)}
+        />
       </View>
       <Modal
         animationType="slide"
@@ -196,5 +212,17 @@ const styles = StyleSheet.create({
     width: 160,
     height: 180,
     alignItems: "center"
+  },
+  reportButton: {
+    borderRadius: 16,
+    padding: 10,
+    backgroundColor: "#804ED9",
+    width: 160,
+    height: 40,
+    alignItems: "center",
+    alignSelf: "center"
+  },
+  reportButtonText: {
+    color: "white"
   }
 });

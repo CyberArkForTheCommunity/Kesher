@@ -6,7 +6,6 @@ import ChildImageList from "../components/ChildImageList";
 import { Text, View } from "../components/Themed";
 
 export default function Reports({ navigation }: any) {
-  console.log(navigation);
   return (
     <AppLayout navigation={navigation} title="דיווח יומי">
       <View style={styles.container}>
