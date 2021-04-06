@@ -223,6 +223,7 @@ const ReportSubCategory = ({ route, navigation }) => {
             message = selectedData.title + "," + message;
         }
         //alert("id: " + selectedData.id + " message: " + message)
+        navigation.navigate('ReportScreen');
     }
 
     const [messageText, setText] = useState('');
