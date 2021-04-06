@@ -18,6 +18,7 @@ export default function ChildImageList({ onSelect = (f: any) => f }) {
 
   React.useEffect(() => {
     (async () => {
+      // todo: get from server
       const cDateData = await AsyncStorage.getItem(dayKey);
       if (cDateData !== null) {
         const data = JSON.parse(cDateData);
@@ -28,6 +29,7 @@ export default function ChildImageList({ onSelect = (f: any) => f }) {
     })();
   }, []);
 
+  // TODO: temp function
   const checkCdata = async (day: number | null) => {
     const today = new Date().getDay();
     if (day === today) {
