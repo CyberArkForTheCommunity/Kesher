@@ -13,7 +13,7 @@ export const IMAGES_PER_ROW = 3;
 const dayKey = "@c_day";
 const childrenKey = "@c_list";
 
-export default function ChildImageList({ onSelect = (f: any) => f }) {
+export default function ChildImageList({ disableToggle = false, onSelect = (f: any) => f }) {
   const [childList, setChildList] = React.useState<Array<ImageData>>([]);
 
   React.useEffect(() => {
@@ -46,15 +46,17 @@ export default function ChildImageList({ onSelect = (f: any) => f }) {
   };
 
   const toggleImageSelected = async (childData: ImageData) => {
-    childData.selected = !childData.selected;
-    const oldItem = childList.find((item) => item.id === childData.id);
-    if (oldItem) oldItem.selected = childData.selected;
-    setChildList([...childList]);
-    await AsyncStorage.setItem(childrenKey, JSON.stringify([...childList]));
+    if(!disableToggle) {
+        childData.selected = !childData.selected;
+        const oldItem = childList.find((item) => item.id === childData.id);
+        if (oldItem) oldItem.selected = childData.selected;
+        setChildList([...childList]);
+        await AsyncStorage.setItem(childrenKey, JSON.stringify([...childList]));
+    }
     onSelect(childData);
   };
 
-  const renderItem = ({ item }: any) => <ChildImage key={item.id} imageData={item} onImagePressed={(data: ImageData) => toggleImageSelected(data)}></ChildImage>;
+  const renderItem = ({ item }: any) => <ChildImage key={item.id} imageData={item} disableToggle={disableToggle} onImagePressed={(data: ImageData) => toggleImageSelected(data)}></ChildImage>;
   return <FlatList data={childList} renderItem={renderItem} keyExtractor={(item: ImageData) => item.id.toString()} numColumns={IMAGES_PER_ROW} />;
 }
 

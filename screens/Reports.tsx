@@ -3,16 +3,14 @@ import { StyleSheet } from "react-native";
 import AppLayout from "../components/AppLayout";
 import ChildImageList from "../components/ChildImageList";
 
-import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
 
 export default function Reports({ navigation }: any) {
+  console.log(navigation);
   return (
     <AppLayout navigation={navigation} title="דיווח יומי">
       <View style={styles.container}>
-        <Text style={styles.title}>דיווח יומי</Text>
-        <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-        <ChildImageList />
+        <ChildImageList disableToggle={true} onSelect={(childData)=>{navigation.navigate('ChatTabScreen', { data:childData })}} />
       </View>
     </AppLayout>
   );
