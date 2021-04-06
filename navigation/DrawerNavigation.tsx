@@ -63,7 +63,7 @@ const AppDrawer = () => {
             name="Presence"
             options={{
               drawerIcon: () => <Image style={styles.icon} source={require("../assets/images/presence.png")} />,
-              drawerLabel: () => <DrawerMenu title="עידכון נוכחות" />,
+              drawerLabel: () => <DrawerMenu title="עדכון נוכחות" />,
             }}
             component={Presence}
           />
