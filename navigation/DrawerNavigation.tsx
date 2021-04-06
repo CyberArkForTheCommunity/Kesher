@@ -24,7 +24,6 @@ const AppDrawer = () => {
 
   return (
     <Drawer.Navigator
-      openByDefault
       initialRouteName="Home"
       // drawerType={isLargeScreen ? "permanent" : "back"}
       drawerStyle={styles.drawer}
