@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, TouchableOpacity, Pressable, Modal, TextInput } from 'react-native';
+import AppLayout from '../components/AppLayout';
 
 const ACTIVITIES_DATA = [{
     id: '11',
@@ -229,51 +230,52 @@ const ReportSubCategory = ({ route, navigation }) => {
     const [messageText, setText] = useState('');
 
     return (
-        <SafeAreaView style={styles.container}>
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                    setModalVisible(!modalVisible);
-                }}
-            >
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <Pressable
-                            style={[styles.buttonClose]}
-                            onPress={() => setModalVisible(!modalVisible)}
-                        >
-                            <Text style={styles.textClose}>X</Text>
-                        </Pressable>
-                        <Text style={styles.modalText}>{getSelectedData().title}</Text>
-                        <TextInput multiline={true} numberOfLines={4} onChangeText={messageText => setText(messageText)} />
-                        <Pressable
-                            style={[styles.buttonClose]}
-                            onPress={() => { sendMessage(messageText); setModalVisible(!modalVisible) }}
-                        >
-                            <Text style={styles.textClose}>שלח</Text>
-                        </Pressable>
+        <AppLayout navigation={navigation} title="דיווח יומי">
+            <SafeAreaView style={styles.container}>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                        setModalVisible(!modalVisible);
+                    }}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <Pressable
+                                style={[styles.buttonClose]}
+                                onPress={() => setModalVisible(!modalVisible)}
+                            >
+                                <Text style={styles.textClose}>X</Text>
+                            </Pressable>
+                            <Text style={styles.modalText}>{getSelectedData().title}</Text>
+                            <TextInput multiline={true} numberOfLines={4} onChangeText={messageText => setText(messageText)} />
+                            <Pressable
+                                style={[styles.buttonClose]}
+                                onPress={() => { sendMessage(messageText); setModalVisible(!modalVisible) }}
+                            >
+                                <Text style={styles.textClose}>שלח</Text>
+                            </Pressable>
+                        </View>
                     </View>
-                </View>
-            </Modal>
-            <Text style={styles.childName}>{route.params.childData.name}</Text>
-            <FlatList
-                data={subCategoriesData}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.id}
-            />
-            <Pressable disabled={!isSelected()} style={isSelected() ? styles.buttonUpdate : styles.buttonUpdateDisabled} onPress={() => { addMessage(); }}>
-                <Text style={styles.textUpdate}>בחר</Text>
-            </Pressable>
-        </SafeAreaView >
+                </Modal>
+                <Text style={styles.childName}>{route.params.childData.name}</Text>
+                <FlatList
+                    data={subCategoriesData}
+                    renderItem={renderItem}
+                    keyExtractor={(item) => item.id}
+                />
+                <Pressable disabled={!isSelected()} style={isSelected() ? styles.buttonUpdate : styles.buttonUpdateDisabled} onPress={() => { addMessage(); }}>
+                    <Text style={styles.textUpdate}>בחר</Text>
+                </Pressable>
+            </SafeAreaView >
+        </AppLayout>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: StatusBar.currentHeight || 0,
         backgroundColor: "#FFFFFF"
     },
     item: {
@@ -311,8 +313,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 16,
-        marginVertical: 8,
-        marginHorizontal: 16,
+        marginVertical: 18,
+        marginHorizontal: 26,
 
     },
     textUpdate: {
