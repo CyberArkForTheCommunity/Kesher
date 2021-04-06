@@ -1,18 +1,17 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
-import AppHeader from "../components/AppHeader";
 import AppLayout from "../components/AppLayout";
 
 import EditScreenInfo from "../components/EditScreenInfo";
 import { Text, View } from "../components/Themed";
 
-export default function TabTwoScreen({ navigation }: any) {
+export default function Board({ navigation }: any) {
   return (
-    <AppLayout navigation={navigation}>
+    <AppLayout navigation={navigation} title="לוח מודעות">
       <View style={styles.container}>
-        <Text style={styles.title}>Tab Two</Text>
+        <Text style={styles.title}>לוח מודעות</Text>
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-        <EditScreenInfo path="/screens/TabTwoScreen.tsx" />
+        <EditScreenInfo path="/screens/Home.tsx" />
       </View>
     </AppLayout>
   );
@@ -26,7 +25,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
+    // fontWeight: "bold",
+    fontFamily: "assistant-bold",
   },
   separator: {
     marginVertical: 30,
