@@ -1,0 +1,104 @@
+Index: components/ChildImage.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React, {useState} from 'react';\r\nimport { Image, ImageBackground, StyleSheet, TouchableWithoutFeedback, View, Text } from \"react-native\";\r\nimport {ImageData, IMAGES_PER_ROW} from './ChildImageList';\r\nimport Layout from './../constants/Layout';\r\n\r\nexport default function(props: {imageData: ImageData, onImagePressed: (id: Number, state: Boolean) => void} ) {\r\n    const [selectedState, setSelectedState] = useState(props.imageData.selected);\r\n    const windowWidth = Layout.window.width;\r\n    const imageWidth = ((windowWidth - 60) / IMAGES_PER_ROW) - 30;        \r\n    \r\n    const getImageSize = () => {\r\n        return {width: imageWidth, height: imageWidth, borderRadius: imageWidth / 2};\r\n    }\r\n\r\n    const getTextSize = () => {\r\n        return {width: imageWidth};\r\n    }\r\n\r\n    const onPressButton = (imageData: ImageData) => {\r\n        const newSelectedState = !selectedState;\r\n        setSelectedState(newSelectedState);\r\n        props.onImagePressed(imageData.id, newSelectedState);\r\n    }\r\n\r\n    if (selectedState) {\r\n        return (\r\n            <TouchableWithoutFeedback onPress={() => onPressButton(props.imageData)}>\r\n                <View style={styles.container}>\r\n                    <ImageBackground\r\n                        source={require('../assets/images/happy-little-2.png')}\r\n                        style={[getImageSize(), styles.image]}\r\n                        imageStyle={getImageSize()}>\r\n                        <View style={[getImageSize(), styles.iconContainer]}>\r\n                            <Image \r\n                                source={require('../assets/icons/selected.png')}\r\n                                style={styles.icon} />\r\n                        </View>\r\n                    </ImageBackground>\r\n                    <Text style={[getTextSize(), styles.text]}>{props.imageData.name}</Text>\r\n                </View>\r\n            </TouchableWithoutFeedback>\r\n        );\r\n    }\r\n    return (\r\n        <TouchableWithoutFeedback onPress={() => onPressButton(props.imageData)}>\r\n            <View style={styles.container}>\r\n                <Image\r\n                    source={require('../assets/images/happy-little-2.png')}\r\n                    style={getImageSize()}\r\n                    />\r\n                <Text style={[getTextSize(), styles.text]}>{props.imageData.name}</Text>\r\n            </View>\r\n        </TouchableWithoutFeedback>\r\n    );\r\n}\r\n\r\nconst styles = StyleSheet.create({\r\n    container: {        \r\n        margin: 15,\r\n    },\r\n    image: {\r\n        resizeMode: \"cover\",\r\n        justifyContent: \"center\"\r\n    },\r\n    icon: {\r\n        height: 28,\r\n        width: 28,\r\n    },\r\n    iconContainer: {        \r\n      alignItems: 'center',\r\n      justifyContent: 'center',\r\n      backgroundColor: '#ffffff60',\r\n      borderColor: '#804ED9',\r\n      borderWidth: 3\r\n    },\r\n    text: {\r\n        textAlign: 'center',\r\n        marginTop: 5,\r\n        fontWeight: 'bold'\r\n    }\r\n});\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- components/ChildImage.tsx	(revision 9b3aaba18dc946133ab4589cce9fc8128a43eefe)
++++ components/ChildImage.tsx	(date 1617700924875)
+@@ -3,7 +3,7 @@
+ import {ImageData, IMAGES_PER_ROW} from './ChildImageList';
+ import Layout from './../constants/Layout';
+ 
+-export default function(props: {imageData: ImageData, onImagePressed: (id: Number, state: Boolean) => void} ) {
++export default function(props: {imageData: ImageData, disableToggle: Boolean, onImagePressed: (id: Number, state: Boolean) => void} ) {
+     const [selectedState, setSelectedState] = useState(props.imageData.selected);
+     const windowWidth = Layout.window.width;
+     const imageWidth = ((windowWidth - 60) / IMAGES_PER_ROW) - 30;        
+@@ -17,8 +17,11 @@
+     }
+ 
+     const onPressButton = (imageData: ImageData) => {
+-        const newSelectedState = !selectedState;
+-        setSelectedState(newSelectedState);
++        let newSelectedState = selectedState;
++        if(!props.disableToggle) {
++            newSelectedState = !selectedState;
++            setSelectedState(newSelectedState);
++        }
+         props.onImagePressed(imageData.id, newSelectedState);
+     }
+ 
+Index: screens/Reports.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import * as React from \"react\";\r\nimport { StyleSheet } from \"react-native\";\r\nimport AppLayout from \"../components/AppLayout\";\r\nimport ChildImageList from \"../components/ChildImageList\";\r\n\r\nimport EditScreenInfo from \"../components/EditScreenInfo\";\r\nimport { Text, View } from \"../components/Themed\";\r\n\r\nexport default function Reports({ navigation }: any) {\r\n  return (\r\n    <AppLayout navigation={navigation} title=\"דיווח יומי\">\r\n      <View style={styles.container}>\r\n        <Text style={styles.title}>דיווח יומי</Text>\r\n        <View style={styles.separator} lightColor=\"#eee\" darkColor=\"rgba(255,255,255,0.1)\" />\r\n        <ChildImageList />\r\n      </View>\r\n    </AppLayout>\r\n  );\r\n}\r\n\r\nconst styles = StyleSheet.create({\r\n  container: {\r\n    flex: 1,\r\n    alignItems: \"center\",\r\n    justifyContent: \"center\",\r\n  },\r\n  title: {\r\n    fontSize: 20,\r\n    paddingTop: 5,\r\n    // fontWeight: \"bold\",\r\n    fontFamily: \"assistant-bold\",\r\n  },\r\n  separator: {\r\n    marginVertical: 10,\r\n    height: 1,\r\n    width: \"80%\",\r\n  },\r\n});\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- screens/Reports.tsx	(revision 9b3aaba18dc946133ab4589cce9fc8128a43eefe)
++++ screens/Reports.tsx	(date 1617701000023)
+@@ -1,18 +1,19 @@
+ import * as React from "react";
+ import { StyleSheet } from "react-native";
+ import AppLayout from "../components/AppLayout";
+-import ChildImageList from "../components/ChildImageList";
++import ReportChildSelector from "../components/ReportChildSelector";
+ 
+ import EditScreenInfo from "../components/EditScreenInfo";
+ import { Text, View } from "../components/Themed";
+ 
+ export default function Reports({ navigation }: any) {
++  console.log(navigation);
+   return (
+     <AppLayout navigation={navigation} title="דיווח יומי">
+       <View style={styles.container}>
+         <Text style={styles.title}>דיווח יומי</Text>
+         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+-        <ChildImageList />
++        <ReportChildSelector />
+       </View>
+     </AppLayout>
+   );
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"BranchesTreeState\">\r\n    <expand>\r\n      <path>\r\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n        <item name=\"LOCAL_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n      </path>\r\n      <path>\r\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n        <item name=\"REMOTE_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n      </path>\r\n      <path>\r\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n        <item name=\"REMOTE_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n        <item name=\"GROUP_NODE:origin\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n      </path>\r\n    </expand>\r\n    <select />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"531e4b51-39a1-4a33-b552-c519cbfe65f7\" name=\"Default Changelist\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/package-lock.json\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/package-lock.json\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/package.json\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/package.json\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/types.tsx\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/types.tsx\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"main\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"1qk4cJUo7XST343lHUtR5pVkcwC\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\r\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\r\n    <property name=\"android.sdk.path\" value=\"$USER_HOME$/AppData/Local/Android/Sdk\" />\r\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$/screens\" />\r\n  </component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\dev\\kesher\\kesher-frontend\\screens\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"SvnConfiguration\">\r\n    <configuration />\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"531e4b51-39a1-4a33-b552-c519cbfe65f7\" name=\"Default Changelist\" comment=\"\" />\r\n      <created>1617610331878</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1617610331878</updated>\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"WindowStateProjectService\">\r\n    <state x=\"696\" y=\"321\" key=\"#com.intellij.fileTypes.FileTypeChooser\" timestamp=\"1617611051491\">\r\n      <screen x=\"0\" y=\"0\" width=\"1920\" height=\"1040\" />\r\n    </state>\r\n    <state x=\"696\" y=\"321\" key=\"#com.intellij.fileTypes.FileTypeChooser/-1920.0.1536.928/0.0.1920.1040@0.0.1920.1040\" timestamp=\"1617611051491\" />\r\n    <state x=\"747\" y=\"222\" key=\"RollbackChangesDialog\" timestamp=\"1617694034692\">\r\n      <screen x=\"0\" y=\"0\" width=\"1920\" height=\"1040\" />\r\n    </state>\r\n    <state x=\"747\" y=\"222\" key=\"RollbackChangesDialog/-1920.0.1536.928/0.0.1920.1040@0.0.1920.1040\" timestamp=\"1617694034692\" />\r\n    <state x=\"666\" y=\"119\" width=\"587\" height=\"801\" key=\"find.popup\" timestamp=\"1617611134623\">\r\n      <screen x=\"0\" y=\"0\" width=\"1920\" height=\"1040\" />\r\n    </state>\r\n    <state x=\"666\" y=\"119\" width=\"587\" height=\"801\" key=\"find.popup/-1920.0.1536.928/0.0.1920.1040@0.0.1920.1040\" timestamp=\"1617611134623\" />\r\n    <state x=\"619\" y=\"308\" key=\"git4idea.merge.GitPullDialog\" timestamp=\"1617610360714\">\r\n      <screen x=\"0\" y=\"0\" width=\"1920\" height=\"1040\" />\r\n    </state>\r\n    <state x=\"619\" y=\"308\" key=\"git4idea.merge.GitPullDialog/-1920.0.1536.928/0.0.1920.1040@0.0.1920.1040\" timestamp=\"1617610360714\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/workspace.xml	(revision 9b3aaba18dc946133ab4589cce9fc8128a43eefe)
++++ .idea/workspace.xml	(date 1617701359112)
+@@ -20,9 +20,9 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="531e4b51-39a1-4a33-b552-c519cbfe65f7" name="Default Changelist" comment="">
+-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/types.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/types.tsx" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/components/ChildImage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ChildImage.tsx" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/screens/Reports.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Reports.tsx" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -76,6 +76,7 @@
+         </entry>
+       </map>
+     </option>
++    <option name="oldMeFiltersMigrated" value="true" />
+   </component>
+   <component name="WindowStateProjectService">
+     <state x="696" y="321" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1617611051491">
+@@ -86,6 +87,10 @@
+       <screen x="0" y="0" width="1920" height="1040" />
+     </state>
+     <state x="747" y="222" key="RollbackChangesDialog/-1920.0.1536.928/0.0.1920.1040@0.0.1920.1040" timestamp="1617694034692" />
++    <state x="769" y="433" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1617701359091">
++      <screen x="0" y="0" width="1920" height="1040" />
++    </state>
++    <state x="769" y="433" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.0.1536.928/0.0.1920.1040@0.0.1920.1040" timestamp="1617701359091" />
+     <state x="666" y="119" width="587" height="801" key="find.popup" timestamp="1617611134623">
+       <screen x="0" y="0" width="1920" height="1040" />
+     </state>

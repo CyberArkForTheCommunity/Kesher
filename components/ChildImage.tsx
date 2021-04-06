@@ -6,10 +6,11 @@ import Layout from "./../constants/Layout";
 interface ChildProps {
   rows?: Number;
   imageData: ImageData;
+  disableToggle: Boolean;
   onImagePressed: (data: any) => void;
 }
 
-export default function ({ rows = 3, imageData, onImagePressed }: ChildProps) {
+export default function ({ rows = 3, disableToggle = false, imageData, onImagePressed }: ChildProps) {
   const [selectedState, setSelectedState] = useState(imageData.selected);
   const windowWidth = Layout.window.width;
   const imageWidth = (windowWidth - 60) / +rows - 30;
@@ -23,8 +24,11 @@ export default function ({ rows = 3, imageData, onImagePressed }: ChildProps) {
   };
 
   const onPressButton = (imageData: ImageData) => {
-    const newSelectedState = !selectedState;
-    setSelectedState(newSelectedState);
+    let newSelectedState = selectedState;
+    if(!disableToggle) {
+        newSelectedState = !selectedState;
+        setSelectedState(newSelectedState);
+    }
     onImagePressed(imageData);
   };
 

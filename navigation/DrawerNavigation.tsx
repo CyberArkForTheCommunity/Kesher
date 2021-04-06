@@ -12,7 +12,9 @@ import Corona from "../screens/Corona";
 import Home from "../screens/Home";
 import Presence from "../screens/Presence";
 import Reports from "../screens/Reports";
+import ReportSubCategory from "../screens/ReportSubCategory";
 import Setting from "../screens/Setting";
+import ChatTabScreen from "../screens/ChatTabScreen";
 import { TabTwoParamList } from "../types";
 
 const Drawer = createDrawerNavigator();
@@ -57,7 +59,7 @@ const AppDrawer = () => {
               drawerIcon: () => <Image style={styles.icon} source={require("../assets/images/report.png")} />,
               drawerLabel: () => <DrawerMenu title="דיווח יומי" />,
             }}
-            component={Reports}
+            component={ReportNavigator}
           />
           <Drawer.Screen
             name="Presence"
@@ -119,6 +121,34 @@ const DrawerMenu = ({ title, link }: any) => {
     </View>
   );
 };
+
+const ReportStack = createStackNavigator<any>();
+
+function ReportNavigator() {
+  return (
+    <ReportStack.Navigator>
+      <ReportStack.Screen
+        name="ReportScreen"
+        component={Reports}
+        options={{
+          headerShown: false
+        }}
+      />
+      <ReportStack.Screen
+        name="ChatTabScreen"
+        component={ChatTabScreen}
+        options={{
+          headerShown: false
+        }}
+      />
+      <ReportStack.Screen
+        name="ReportSubCategory"
+        component={ReportSubCategory}
+        options={{ headerShown: false }}
+      />
+    </ReportStack.Navigator>
+  );
+}
 
 export default AppDrawer;
 
