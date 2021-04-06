@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { GiftedChat, Message } from 'react-native-gifted-chat';
 import {CustomMessage} from '../components/message';
 import {mockMessages} from '../mock/mock-messages'
+import AppLayout from "../components/AppLayout";
+import useUserRole from "../hooks/useUserRoles";
 
-export default function ChatTabScreen() {
+export default function ChatTabScreen({ route, navigation }) {
 
       const [messages, setMessages] = React.useState([]);
+      const user = useUserRole();
 
       const messagesFromServer = mockMessages.map(message => {
         return {
@@ -37,11 +38,12 @@ export default function ChatTabScreen() {
         }, [])
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Chat Tab</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <GiftedChat messages={messages} onSend={messages => onSend(messages)} user={{_id: 1}} renderMessage={message => customRenderMessage(message)} />
-    </View>
+    <AppLayout navigation={navigation} title="דיווח יומי">
+      <View style={styles.container}>
+        <Text style={styles.childName}>{route.params.data.name}</Text>
+        <GiftedChat messages={messages} onSend={messages => onSend(messages)} user={{_id: 1}} renderMessage={message => customRenderMessage(message)} />
+      </View>
+    </AppLayout>
   );
 }
 
@@ -58,4 +60,13 @@ const styles = StyleSheet.create({
     height: 1,
     width: '80%',
   },
+  childName: {
+    fontSize: 18,
+    textAlign: 'center',
+    padding: 20,
+    marginRight: 20,
+    marginLeft: 20,
+    borderBottomColor: 'lightgray',
+    borderBottomWidth: 1
+  }
 });
