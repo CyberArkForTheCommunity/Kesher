@@ -20,12 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="531e4b51-39a1-4a33-b552-c519cbfe65f7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ChildImage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ChildImage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ChildImageList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ChildImageList.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/navigation/DrawerNavigation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/DrawerNavigation.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/ChatTabScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/ChatTabScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/Reports.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/screens/Reports.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,10 +85,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="92" y="92" width="1736" height="856" key="AVDManager/-1920.0.1536.928/0.0.1920.1040@0.0.1920.1040" timestamp="1617709483744" />
-    <state x="184" y="85" key="DiffContextDialog" timestamp="1617709528926">
+    <state x="184" y="85" width="1536" height="861" key="DiffContextDialog" timestamp="1617714180557">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="184" y="85" key="DiffContextDialog/-1920.0.1536.928/0.0.1920.1040@0.0.1920.1040" timestamp="1617709528926" />
+    <state x="184" y="85" width="1536" height="861" key="DiffContextDialog/-1920.0.1536.928/0.0.1920.1040@0.0.1920.1040" timestamp="1617714180557" />
     <state x="747" y="222" key="RollbackChangesDialog" timestamp="1617705163500">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -114,5 +109,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="619" y="308" key="git4idea.merge.GitPullDialog/-1920.0.1536.928/0.0.1920.1040@0.0.1920.1040" timestamp="1617610360714" />
+    <state x="616" y="172" width="672" height="676" key="search.everywhere.popup" timestamp="1617714129104">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="172" width="672" height="676" key="search.everywhere.popup/-1920.0.1536.928/0.0.1920.1040@0.0.1920.1040" timestamp="1617714129104" />
   </component>
 </project>
