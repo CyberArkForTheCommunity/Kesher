@@ -5,10 +5,10 @@ import AppHeader from "./AppHeader";
 
 import { Text, View } from "./Themed";
 
-const AppLayout = ({ navigation, children }: any) => {
+const AppLayout = ({ navigation, title = "", children }: any) => {
   return (
     <View style={styles.container}>
-      <AppHeader title="Tab one" navigation={navigation} />
+      <AppHeader title={title} navigation={navigation} />
       {children}
     </View>
   );

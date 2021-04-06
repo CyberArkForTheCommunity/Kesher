@@ -7,7 +7,7 @@ import { Text, View } from "../components/Themed";
 
 export default function Board({ navigation }: any) {
   return (
-    <AppLayout navigation={navigation}>
+    <AppLayout navigation={navigation} title="לוח מודעות">
       <View style={styles.container}>
         <Text style={styles.title}>לוח מודעות</Text>
         <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
