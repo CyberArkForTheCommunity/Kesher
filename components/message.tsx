@@ -3,14 +3,14 @@ import { StyleSheet } from 'react-native';
 import { Message } from 'react-native-gifted-chat'
 import { Text, View } from '../components/Themed';
 
-export function CustomMessage(message: Message) {
+export function CustomMessage(message: Message, isParent: Boolean) {
   let title;
   const isMe = !!message.currentMessage.user.name;
   const styles = StyleSheet.create({
     textMessageContainer: {
       direction: 'rtl',
       padding: 11,
-      borderColor: isMe ? '#F0E8FF' : '#804ED9',
+      borderColor: isMe && isParent ? '#F0E8FF' : '#804ED9',
       borderWidth: 1,
       borderRadius: 16,
       margin: 20,
@@ -18,7 +18,7 @@ export function CustomMessage(message: Message) {
       marginTop: 0,
       fontSize: 16,
       lineHeight: 18,
-      backgroundColor: isMe ? '#F0E8FF' : '#B097DC',
+      backgroundColor: isMe && isParent ? '#F0E8FF' : '#B097DC',
       shadowColor: 'rgba(0,0,0,0.15)',
       shadowOffset: {
         width: 1,
